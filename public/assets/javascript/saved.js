@@ -13,9 +13,9 @@ $(document).ready(function() {
   function initPage() {
     // Empty the article container, run an AJAX request for any saved headlines
     $.get("/api/article?saved=true").then(function(data) {
-      articleContainer.empty();
+      // articleContainer.empty();
       // If we have headlines, render them to the page
-      if (data && data.length) {
+      if (data) {
         renderArticles(data);
       } else {
         // Otherwise render a message explaining we have no articles
@@ -52,7 +52,6 @@ $(document).ready(function() {
         $("<a class='btn btn-info notes'>Article Notes</a>")
       )
     );
-
     var cardBody = $("<div class='card-body'>").text(article.summary);
 
     card.append(cardHeader, cardBody);
@@ -119,7 +118,7 @@ $(document).ready(function() {
     var articleToDelete = $(this)
       .parents(".card")
       .data();
-
+      console.log(articleToDelete)
     // Remove card from page
     $(this)
       .parents(".card")
