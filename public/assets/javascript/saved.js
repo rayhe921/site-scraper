@@ -12,7 +12,7 @@ $(document).ready(function() {
 
   function initPage() {
     // Empty the article container, run an AJAX request for any saved headlines
-    $.get("/api/headlines?saved=true").then(function(data) {
+    $.get("/api/article?saved=true").then(function(data) {
       articleContainer.empty();
       // If we have headlines, render them to the page
       if (data && data.length) {
@@ -47,7 +47,7 @@ $(document).ready(function() {
       $("<h3>").append(
         $("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
           .attr("href", article.url)
-          .text(article.headline),
+          .text(article.title),
         $("<a class='btn btn-danger delete'>Delete From Saved</a>"),
         $("<a class='btn btn-info notes'>Article Notes</a>")
       )
@@ -127,7 +127,7 @@ $(document).ready(function() {
     // Using a delete method here just to be semantic since we are deleting an article/headline
     $.ajax({
       method: "DELETE",
-      url: "/api/headlines/" + articleToDelete._id
+      url: "/api/article/" + articleToDelete._id
     }).then(function(data) {
       // If this works out, run initPage again which will re-render our list of saved articles
       if (data.ok) {
@@ -179,7 +179,7 @@ $(document).ready(function() {
     // If we actually have data typed into the note input field, format it
     // and post it to the "/api/notes" route and send the formatted noteData as well
     if (newNote) {
-      noteData = { _headlineId: $(this).data("article")._id, noteText: newNote };
+      noteData = { _articleId: $(this).data("article")._id, noteText: newNote };
       $.post("/api/notes", noteData).then(function() {
         // When complete, close the modal
         bootbox.hideAll();

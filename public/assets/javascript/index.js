@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   function initPage() {
     // Run an AJAX request for any unsaved headlines
-    $.get("/api/articles?saved=false").then(function(data) {
+    $.get("/api/article?saved=false").then(function(data) {
       articleContainer.empty();
       // If we have headlines, render them to the page
       if (data && data.length) {
@@ -45,7 +45,7 @@ $(document).ready(function() {
       $("<h3>").append(
         $("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
           .attr("href", article.url)
-          .text(article.headline),
+          .text(article.title),
         $("<a class='btn btn-success save'>Save Article</a>")
       )
     );
@@ -100,7 +100,7 @@ $(document).ready(function() {
     // Using a patch method to be semantic since this is an update to an existing record in our collection
     $.ajax({
       method: "PUT",
-      url: "/api/headlines/" + articleToSave._id,
+      url: "/api/article/" + articleToSave._id,
       data: articleToSave
     }).then(function(data) {
       // If the data was saved successfully
